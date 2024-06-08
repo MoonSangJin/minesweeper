@@ -19,6 +19,11 @@ body {
     border: 1px solid #999;
     background-color: #ccc;
     cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+
+.cell:not(.revealed):not(.mine):not(.flag):hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .cell.revealed {
