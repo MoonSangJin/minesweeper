@@ -146,7 +146,7 @@ export class Minesweeper {
             if (this.lives <= 0) {
                 this.gameOver(); // 목숨이 0이면 게임 종료 및 초기화
             } else {
-                alert(`You hit a mine! Lives remaining: ${this.lives}`);
+                alert(`💣 You hit a mine! Lives remaining: ${this.lives}`);
             }
         } else {
             cell.classList.add("revealed");
@@ -208,13 +208,13 @@ export class Minesweeper {
         }
 
         if (allMinesFlagged || allCellsRevealed) {
-            alert("🥳Congratulations! You've won the game!");
+            alert("🥳 Congratulations! You've won the game!");
             this.resetGame();
         }
     }
 
     gameOver() {
-        alert("Game Over! You have no more lives left.");
+        alert("💀 Game Over! You have no more lives left.");
         this.revealAllMines();
         this.resetGame(); // 게임을 리셋하여 초기화
     }
@@ -229,7 +229,7 @@ export class Minesweeper {
                     if (cell) {
                         cell.classList.add("mine");
                         cell.classList.remove("flag");
-                        cell.style.backgroundImage = "none";
+                        cell.style.backgroundImage = "url('bomb.webp')";
                     }
                 }
             }
@@ -257,10 +257,10 @@ export class Minesweeper {
     }
 
     resetGame() {
-        if (confirm("Would you like to play again?")) {
+        if (confirm("🧐 Would you like to play again?")) {
             this.init(); // 목숨과 남은 폭탄 수를 포함하여 게임을 초기화
         } else {
-            alert("Thanks for playing!");
+            alert("😀 Thanks for playing!");
         }
     }
 }
