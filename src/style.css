@@ -10,6 +10,10 @@ body {
     height: 100vh;
     overflow: hidden;
     background-color: #f0f0f0; /* 배경색 추가 */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* 게임 제목 스타일 */
