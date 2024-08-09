@@ -2,6 +2,8 @@
 
 Welcome to the Minesweeper game! 🎮 💣
 
+https://sangjin-minesweeper.vercel.app/
+
 This is a classic Minesweeper game implemented in TypeScript and styled with CSS. The game features an intuitive UI and provides a fun experience for both desktop and mobile users.
 
 ## Features
