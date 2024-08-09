@@ -114,7 +114,7 @@ export class Minesweeper {
 
                 // Long press for flagging on mobile
                 let pressTimer: number; // 브라우저 환경에서는 number를 사용
-                cell.addEventListener("touchstart", (e) => {
+                cell.addEventListener("touchstart", () => {
                     pressTimer = window.setTimeout(() => this.toggleFlag(row, col), 500);
                 });
                 cell.addEventListener("touchend", () => {
