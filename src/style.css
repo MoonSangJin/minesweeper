@@ -61,14 +61,14 @@ h1 {
 
 /* 폭탄이 있는 셀의 스타일 */
 .cell.mine {
-    background: url("../public/bomb.webp") no-repeat center center;
+    background: url("/bomb.webp") no-repeat center center;
     background-size: cover;
     animation: bomb-explosion 0.5s ease-in-out;
 }
 
 /* 깃발이 있는 셀의 스타일 */
 .cell.flag {
-    background: url("../public/flag.webp") no-repeat center center; /* 깃발 이미지 */
+    background: url("/flag.png") no-repeat center center; /* 깃발 이미지 */
     background-size: cover;
 }
 

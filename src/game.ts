@@ -22,7 +22,7 @@ export class Minesweeper {
     }
 
     init() {
-        this.lives = 500; // 목숨 초기화
+        this.lives = 5; // 목숨 초기화
         this.remainingMines = this.mines; // 남은 폭탄 수 초기화
         this.createBoard();
         this.placeMines();
@@ -137,7 +137,7 @@ export class Minesweeper {
             this.lives--; // 목숨 감소
             cell.classList.add("mine");
             cell.classList.remove("flag");
-            cell.style.backgroundImage = "url('../public/bomb.webp')"; // 폭탄 이미지 설정
+            cell.style.backgroundImage = "url('/bomb.webp')"; // 폭탄 이미지 설정
             this.remainingMines--; // 폭탄이 터졌으므로 남은 폭탄 수 감소
 
             this.updateLivesUI(); // 목숨 UI 업데이트
@@ -182,7 +182,7 @@ export class Minesweeper {
 
         if (this.flagged[row][col]) {
             cell.classList.add("flag");
-            cell.style.backgroundImage = "url('../public/flag.png')"; // 깃발 이미지 설정
+            cell.style.backgroundImage = "url('flag.png')"; // 깃발 이미지 설정
         } else {
             cell.classList.remove("flag");
             cell.style.backgroundImage = "none";
