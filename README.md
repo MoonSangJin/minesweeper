@@ -40,7 +40,7 @@ This is a classic Minesweeper game implemented in TypeScript and styled with CSS
     npm start
     ```
 
-4. Open `http://localhost:3000` in your web browser to play the game.
+4. Open `http://localhost:5173` in your web browser to play the game.
 
 ## Usage
 
