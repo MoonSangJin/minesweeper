@@ -22,7 +22,7 @@ export class Minesweeper {
     }
 
     init() {
-        this.lives = 5; // 목숨 초기화
+        this.lives = 500; // 목숨 초기화
         this.remainingMines = this.mines; // 남은 폭탄 수 초기화
         this.createBoard();
         this.placeMines();
@@ -91,13 +91,16 @@ export class Minesweeper {
     }
 
     renderBoard() {
-        this.gameBoardElement.style.gridTemplateRows = `repeat(${this.rows}, 30px)`;
-        this.gameBoardElement.style.gridTemplateColumns = `repeat(${this.cols}, 30px)`;
+        const cellSize = 30; // px
+        this.gameBoardElement.style.gridTemplateRows = `repeat(${this.rows}, ${cellSize}px)`;
+        this.gameBoardElement.style.gridTemplateColumns = `repeat(${this.cols}, ${cellSize}px)`;
+        this.gameBoardElement.style.height = `${cellSize * this.rows + 2 * (this.rows - 1)}px`; // 보드 높이 조정
+        this.gameBoardElement.style.width = `${cellSize * this.cols + 2 * (this.cols - 1)}px`; // 보드 너비 조정
         this.gameBoardElement.innerHTML = "";
 
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
-                const cell = document.createElement("div");
+                const cell = document.createElement("div") as HTMLElement;
                 cell.classList.add("cell");
                 cell.dataset.row = row.toString();
                 cell.dataset.col = col.toString();
@@ -110,9 +113,9 @@ export class Minesweeper {
                 });
 
                 // Long press for flagging on mobile
-                let pressTimer: NodeJS.Timeout;
+                let pressTimer: number; // 브라우저 환경에서는 number를 사용
                 cell.addEventListener("touchstart", (e) => {
-                    pressTimer = setTimeout(() => this.toggleFlag(row, col), 500);
+                    pressTimer = window.setTimeout(() => this.toggleFlag(row, col), 500);
                 });
                 cell.addEventListener("touchend", () => {
                     clearTimeout(pressTimer);
@@ -127,24 +130,18 @@ export class Minesweeper {
         if (!this.isInBounds(row, col) || this.revealed[row][col] || this.flagged[row][col]) return;
 
         this.revealed[row][col] = true;
-        const cell = this.gameBoardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        const cell = this.gameBoardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`) as HTMLElement;
         if (!cell) return;
 
         if (this.board[row][col] === -1) {
             this.lives--; // 목숨 감소
             cell.classList.add("mine");
             cell.classList.remove("flag");
+            cell.style.backgroundImage = "url('../public/bomb.webp')"; // 폭탄 이미지 설정
             this.remainingMines--; // 폭탄이 터졌으므로 남은 폭탄 수 감소
 
-            const livesElement = document.getElementById("lives");
-            if (livesElement) {
-                livesElement.textContent = `Lives: ${this.lives}`;
-            }
-
-            const minesElement = document.getElementById("mines");
-            if (minesElement) {
-                minesElement.textContent = `Mines: ${this.remainingMines}`;
-            }
+            this.updateLivesUI(); // 목숨 UI 업데이트
+            this.updateMinesUI(); // 남은 폭탄 수 UI 업데이트
 
             if (this.lives <= 0) {
                 this.gameOver(); // 목숨이 0이면 게임 종료 및 초기화
@@ -180,16 +177,14 @@ export class Minesweeper {
         if (!this.isInBounds(row, col) || this.revealed[row][col]) return;
 
         this.flagged[row][col] = !this.flagged[row][col];
-        const cell = this.gameBoardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+        const cell = this.gameBoardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`) as HTMLElement;
         if (!cell) return;
 
         if (this.flagged[row][col]) {
             cell.classList.add("flag");
-            // Display a different image for flagged cells
-            cell.style.backgroundImage = "url('../public/flag.png')";
+            cell.style.backgroundImage = "url('../public/flag.png')"; // 깃발 이미지 설정
         } else {
             cell.classList.remove("flag");
-            // Reset to default background image
             cell.style.backgroundImage = "none";
         }
 
@@ -213,7 +208,7 @@ export class Minesweeper {
         }
 
         if (allMinesFlagged || allCellsRevealed) {
-            alert("Congratulations! You've won the game!");
+            alert("🥳Congratulations! You've won the game!");
             this.resetGame();
         }
     }
@@ -228,7 +223,9 @@ export class Minesweeper {
         for (let row = 0; row < this.rows; row++) {
             for (let col = 0; col < this.cols; col++) {
                 if (this.board[row][col] === -1) {
-                    const cell = this.gameBoardElement.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+                    const cell = this.gameBoardElement.querySelector(
+                        `.cell[data-row="${row}"][data-col="${col}"]`
+                    ) as HTMLElement;
                     if (cell) {
                         cell.classList.add("mine");
                         cell.classList.remove("flag");
